@@ -106,8 +106,8 @@ class moon {
         // From MyWee Pascal
         $DST = date("Z") / 3600; // 2;
                                  // $JOU = date("z");
-                                 // $LAT = deg2rad( 42.7136788229883 );
-                                 // $LON = deg2rad( 2.84930393099784 );
+                                 // $LAT = deg2rad( 42. );
+                                 // $LON = deg2rad( 2. );
                                  // $SO = 1367.6;
                                  // $HOD = (date("G")*60 + date("i") - .5) / 60; //tSV
                                  // $HRA = 2*pi()*($HOD - 12.0) / 24.0; //Angle Horaire
