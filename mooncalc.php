@@ -3,14 +3,14 @@
  * REFERENCES: Meeus, Jean. "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 315 DATE/PROGRAMMER/NOTE:
  * 07-31-2001 Todd A. Guillory created Adapted from C to php @author Pascal Péchard
  */
-class moon {
+class moon implements Moonphases {
     var $today;
     /**
      *
      * @param timestamp $today
      */
     function __construct($today = null) {
-        ($today == null) ? $today = time() : $today = today;
+        ($today == null) ? $this->today = time() : $this->today = $today;
     }
     /**
      * Calculate Julian Day a given input phase occurs on
@@ -67,7 +67,7 @@ class moon {
         
         $atotal = .000001 * ((325 * sin($a[0])) + (165 * sin($a[1])) + (164 * sin($a[2])) + (126 * sin($a[3])) + (110 * sin($a[4])) + (62 * sin($a[5])) + (60 * sin($a[6])) + (56 * sin($a[7])) + (47 * sin($a[8])) + (42 * sin($a[9])) + (40 * sin($a[10])) + (37 * sin($a[11])) + (35 * sin($a[12])) + (23 * sin($a[13])));
         
-        $phase = new Moonphase();
+        //$phase = new Moonphase();
         
         switch ($phase) {
             case Moonphases::newmoon :
@@ -210,8 +210,8 @@ class moon {
      * aeaster - Astronomical Easter
      * Returns the Julian Day Easter occurs on as an astronomical event
      *
-     * @param year (int) year to compute Easter in
-     * @return Julian day (double) of Easter
+     * @param (int) year year to compute Easter in
+     * @return (double) Julian day of Easter
      *         FUNCTIONS CALLED:
      *         julian2date, equinox_solstice, moonphase, day_of_week
      *         DATE/PROGRAMMER/NOTE:
@@ -229,39 +229,52 @@ class moon {
         // double yd;
         // double moon;
         
-        /* calculate the vernal equinox for the given year */
-        $equinox = zero_hour_julian(equinox_solstice($inyear, 0/*March*/));
+        /**
+         * calculate the vernal equinox for the given year
+         */
+        $equinox = self::zero_hour_julian(self::equinox_solstice($inyear, 0/*March*/));
         
-        /* find the first full moon ON or AFTER the equinox */
-        $y = julian_to_date($equinox/*, &m, &d, &y*/);
+        /**
+         * find the first full moon ON or AFTER the equinox
+         */
+        $y = self::julian_to_date($equinox/*, &m, &d, &y*/);
         // echo "<tr><td>Vernal Equinox " . date("d M Y", mktime(0, 0, 0, $y["month"], $y["day"], $y["year"]));
         $yd = $y["year"];
         
-        $moon = zero_hour_julian(moon_phase($yd, Moonphases::fullmoon));
-        $tmp = julian_to_date($moon/*, &m, &d, &y*/);
+        $moon = self::zero_hour_julian(self::moon_phase($yd, Moonphases::fullmoon));
+        $tmp = self::julian_to_date($moon/*, &m, &d, &y*/);
         // echo "<tr><td>moon1 " . date("d M Y", mktime(0, 0, 0, $tmp["month"], $tmp["day"], $tmp["year"]));
         
         while ( $moon < $equinox ) {
             $yd += 0.04;
-            $moon = zero_hour_julian(moon_phase($yd, Moonphases::fullmoon));
+            $moon = self::zero_hour_julian(self::moon_phase($yd, Moonphases::fullmoon));
         }
-        $tmp = julian_to_date($moon/*, &m, &d, &y*/);
+        $tmp = self::julian_to_date($moon/*, &m, &d, &y*/);
         // echo "<tr><td>moon2 " . date("d M Y", mktime(0, 0, 0, $tmp["month"], $tmp["day"], $tmp["year"]));
         
-        /* find the first Sunday AFTER the full moon */
+        /**
+         * find the first Sunday AFTER the full moon
+         */
         $moon++;
-        while ( day_of_week($moon) != 0 ) {
+        while ( self::day_of_week($moon) != 0 ) {
             $moon++;
         }
         
         return $moon;
     }
     /**
-     * Julian2Date PURPOSE: Converts a Julian Day to a Gregorian month, day and year REFERENCES; Meeus, Jean.
-     * "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 63 INPUT ARGUMENTS: JD (double) input Julian Day
-     * OUTPUT ARGUMENTS: month (short) Julian Day day (double) day year (int) year RETURNED VALUE: 0 if error occured in
-     * calculation 1 if no error GLOBALS USED: none FUNCTIONS CALLED: floor DATE/PROGRAMMER/NOTES: 10-15-1998 Todd A.
-     * Guillory created NOTES: does not work for negative Julian Day values but does work for negative years
+     * Julian2Date
+     * Converts a Julian Day to a Gregorian month, day and year
+     * REFERENCES; Meeus, Jean.
+     * "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 63
+     * INPUT ARGUMENTS: JD (double) input Julian Day
+     * OUTPUT ARGUMENTS: month (short) Julian Day day (double) day year (int) year
+     * RETURNED VALUE: 0 if error occured in
+     * calculation 1 if no error
+     * GLOBALS USED: none
+     * FUNCTIONS CALLED: floor
+     * DATE/PROGRAMMER/NOTES: 10-15-1998 Todd A. Guillory created
+     * NOTES: does not work for negative Julian Day values but does work for negative years
      */
     function julian_to_date($JD/*, $month, $day, $year*/) {
         
@@ -308,13 +321,11 @@ class moon {
      * ZeroHourJulian
      * Returns the JD value at 0 hour (midnight) of the given input Julian Day
      *
-     * @param JD (double) Julian Day for day to calculate
-     *        Julian Day value at midnight of the input day
+     * @param JD (double) Julian Day for day to calculate Julian Day value at midnight of the input day
      *        DATE/PROGRAMMER/NOTE:
      *        09-16-1999 Todd A. Guillory created
      *        NOTES:
      *        This function is usful for some AstroAlgo functions such as RiseSetTrans
-     *        ******************************************************************************
      */
     function zero_hour_julian($JD) {
         return floor($JD - 0.5) + 0.5;
@@ -333,10 +344,9 @@ class moon {
      *        DATE/PROGRAMMER/NOTE:
      *        02-18-2001 Todd A. Guillory written in ANSI C
      *        02-19-2001 Todd A. Guillory tested, 2451959.50 -> 1 for Monday
-     *        ******************************************************************************
      */
     function day_of_week($j) {
-        return ( int ) (zero_hour_julian($j) + 1.5) % 7;
+        return ( int ) (self::zero_hour_julian($j) + 1.5) % 7;
     }
 }
 /**
