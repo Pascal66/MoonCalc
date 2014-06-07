@@ -1,16 +1,18 @@
 <?php
-/*
- * REFERENCES: Meeus, Jean. "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 315 DATE/PROGRAMMER/NOTE:
- * 07-31-2001 Todd A. Guillory created Adapted from C to php @author Pascal Péchard
+/**
+ * REFERENCES: Meeus, Jean.
+ * "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 315 DATE/PROGRAMMER/NOTE:
+ * 07-31-2001 Todd A. Guillory created
+ * 06-01-2014 Adapted from C to PHP @author Pascal Pechard
  */
 class moon implements Moonphases {
-    var $today;
+    public static $today;
     /**
      *
      * @param timestamp $today
      */
-    function __construct($today = null) {
-        ($today == null) ? $this->today = time() : $this->today = $today;
+    function __construct($stamp = null) {
+        self::$today = is_null($stamp) ? time() : $stamp;
     }
     /**
      * Calculate Julian Day a given input phase occurs on
@@ -42,7 +44,7 @@ class moon implements Moonphases {
         // $atotal = 0; sum of planatary arguments
         // $corrections = 0; sum of corrections
         // $e = 0; eccentricity of Earth's orbit
-        $k = floor(($year - 2000.0) * 12.3685) + ($phase * 0.25);
+        $k = floor((/*self::Year()*/$year - 2000.0) * 12.3685) + ($phase * 0.25);
         $t = ($k / 1236.85);
         $e = 1.0 - $t * (0.002516 - (0.0000074 * $t)); // pg 308
         $m = deg2rad(2.5534 + (29.10535669 * $k) - $t * $t * (0.0000218 - (0.00000011 * $t)));
@@ -67,7 +69,7 @@ class moon implements Moonphases {
         
         $atotal = .000001 * ((325 * sin($a[0])) + (165 * sin($a[1])) + (164 * sin($a[2])) + (126 * sin($a[3])) + (110 * sin($a[4])) + (62 * sin($a[5])) + (60 * sin($a[6])) + (56 * sin($a[7])) + (47 * sin($a[8])) + (42 * sin($a[9])) + (40 * sin($a[10])) + (37 * sin($a[11])) + (35 * sin($a[12])) + (23 * sin($a[13])));
         
-        //$phase = new Moonphase();
+        // $phase = new Moonphase();
         
         switch ($phase) {
             case Moonphases::newmoon :
@@ -212,15 +214,14 @@ class moon implements Moonphases {
      *
      * @param (int) year year to compute Easter in
      * @return (double) Julian day of Easter
-     *         FUNCTIONS CALLED:
-     *         julian2date, equinox_solstice, moonphase, day_of_week
-     *         DATE/PROGRAMMER/NOTE:
-     *         02-18-2001 Todd A. Guillory started
-     *         02-20-2001 Todd A. Guillory 1981 and 2019 still wrong
-     *         Notes:
-     *         Easter is defined as the first Sunday AFTER the first full moon ON or AFTER
-     *         the Vernal Equinox, thus, it can ONLY occur in March or April, subtract
-     *         46 days from Easter to find Ash Wednesday. Lent is 40 days + 6 Sundays
+     * @uses julian2date, equinox_solstice, moonphase, day_of_week
+     *       DATE/PROGRAMMER/NOTE:
+     *       02-18-2001 Todd A. Guillory started
+     *       02-20-2001 Todd A. Guillory 1981 and 2019 still wrong
+     *       Notes:
+     *       Easter is defined as the first Sunday AFTER the first full moon ON or AFTER
+     *       the Vernal Equinox, thus, it can ONLY occur in March or April, subtract
+     *       46 days from Easter to find Ash Wednesday. Lent is 40 days + 6 Sundays
      */
     function aeaster($inyear) {
         // short m;
@@ -267,14 +268,13 @@ class moon implements Moonphases {
      * Converts a Julian Day to a Gregorian month, day and year
      * REFERENCES; Meeus, Jean.
      * "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991. pp. 63
-     * INPUT ARGUMENTS: JD (double) input Julian Day
-     * OUTPUT ARGUMENTS: month (short) Julian Day day (double) day year (int) year
-     * RETURNED VALUE: 0 if error occured in
-     * calculation 1 if no error
-     * GLOBALS USED: none
-     * FUNCTIONS CALLED: floor
-     * DATE/PROGRAMMER/NOTES: 10-15-1998 Todd A. Guillory created
-     * NOTES: does not work for negative Julian Day values but does work for negative years
+     *
+     * @param JD (double) input Julian Day
+     *        OUTPUT ARGUMENTS: month (short) Julian Day day (double) day year (int) year
+     *        RETURNED VALUE: 0 if error occured in
+     *        calculation 1 if no error
+     *        DATE/PROGRAMMER/NOTES: 10-15-1998 Todd A. Guillory created
+     *        NOTES: does not work for negative Julian Day values but does work for negative years
      */
     function julian_to_date($JD/*, $month, $day, $year*/) {
         
@@ -322,8 +322,7 @@ class moon implements Moonphases {
      * Returns the JD value at 0 hour (midnight) of the given input Julian Day
      *
      * @param JD (double) Julian Day for day to calculate Julian Day value at midnight of the input day
-     *        DATE/PROGRAMMER/NOTE:
-     *        09-16-1999 Todd A. Guillory created
+     *        DATE/PROGRAMMER/NOTE: 09-16-1999 Todd A. Guillory created
      *        NOTES:
      *        This function is usful for some AstroAlgo functions such as RiseSetTrans
      */
@@ -336,17 +335,18 @@ class moon implements Moonphases {
      * Returns what day of the week the input Julian Day is
      *
      * @param (double) j input Julian Day
-     *        RETURNED VALUE:
-     *        day of the week
-     *        0 = Sunday...6 = Saturday
-     *        FUNCTIONS CALLED:
-     *        ZeroHourJulian
-     *        DATE/PROGRAMMER/NOTE:
-     *        02-18-2001 Todd A. Guillory written in ANSI C
-     *        02-19-2001 Todd A. Guillory tested, 2451959.50 -> 1 for Monday
+     * @return (int) day of the week
+     *         0 = Sunday...6 = Saturday
+     * @uses ZeroHourJulian
+     *       DATE/PROGRAMMER/NOTE:
+     *       02-18-2001 Todd A. Guillory written in ANSI C
+     *       02-19-2001 Todd A. Guillory tested, 2451959.50 -> 1 for Monday
      */
     function day_of_week($j) {
         return ( int ) (self::zero_hour_julian($j) + 1.5) % 7;
+    }
+    function Year() {
+        return date("Y", self::$today);
     }
 }
 /**
