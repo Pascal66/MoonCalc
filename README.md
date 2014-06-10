@@ -1,7 +1,7 @@
 MoonCalc
 ========
-
-New php class for all moon calculations
+Static use is necessary with an include (object isnt declared)
+Php class for some moon calculations
 
 REFERENCES: Meeus, Jean. "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991.
 
