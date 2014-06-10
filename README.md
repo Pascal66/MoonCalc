@@ -1,7 +1,8 @@
 MoonCalc
 ========
-Static use is necessary with an include (object isnt declared)
-Php class for some moon calculations
+Php class for some moon calculations.
+Static use is necessary with an include (object isnt declared) (self instead this).
+
 
 REFERENCES: Meeus, Jean. "Astronomical Algorithms, 1st ed." Willmann-Bell. Inc. 1991.
 
