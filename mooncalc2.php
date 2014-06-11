@@ -817,8 +817,13 @@ class moon implements Moonphases {
     // double
     function days($date) {
         // http://www.giss.nasa.gov/tools/mars24/help/algorithm.html
+<<<<<<< HEAD
         // J2000.0 (ou J2000), désigne le jour julien 2 451 545.0 TT, soit le 1er janvier 2000 dans le calendrier
         // grégorien, à 11 h 58 min 55,816 s UTC (11 h 59 min 27,816 s TAI)
+=======
+        // J2000.0 (ou J2000), dÃ©signe le jour julien 2 451 545.0 TT, soit le 1er janvier 2000 dans le calendrier
+        // grÃ©gorien, Ã  11 h 58 min 55,816 s UTC (11 h 59 min 27,816 s TAI)
+>>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
         
         /**
          * A-2.
@@ -857,7 +862,11 @@ class moon implements Moonphases {
          * C 33 from the IERS Earth Orientation Centre indicates this will not occur any earlier than Jan. 1, 2009.)
          * A-5. Determine Julian Date (TT).
          */
+<<<<<<< HEAD
         $JDTT = $JDUT + ($TT_UTC) / 86400; // s·day-1]
+=======
+        $JDTT = $JDUT + ($TT_UTC) / 86400; // sÂ·day-1]
+>>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
         
         /**
          * A-6.
@@ -868,7 +877,11 @@ class moon implements Moonphases {
         // Eq. Parameter Value
         // A-1 millis 1073137591000 ms
         // A-2 JDUT 2453008.07397
+<<<<<<< HEAD
         // A-3 T —
+=======
+        // A-3 T â€”
+>>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
         // A-4 TT - UTC 64.184 s
         // A-5 JDTT 2453008.07471
         // A-6 DtJ2000 1463.07471
@@ -988,14 +1001,22 @@ class moon implements Moonphases {
         $topo['rvec'] = $r1;
         return $topo;
     }
+<<<<<<< HEAD
 // Location: W 42°42'40.0", N 2°51'30.0", 54m
+=======
+// Location: W 42Â°42'40.0", N 2Â°51'30.0", 54m
+>>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
 // (Longitude referred to Greenwich meridian)
 
 // Time Zone: 2h 00m east of Greenwich
 
 // Date Rise Az. Transit Alt. Set Az.
 // (Zone)
+<<<<<<< HEAD
 // h m ° h m ° h m °
+=======
+// h m Â° h m Â° h m Â°
+>>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
 // 2014 Jun 09 (Mon) 19:50 102 01:09 77S 07:19 260
 // 2014 Jun 10 (Tue) 20:43 105 01:59 74S 08:09 256
 // 2014 Jun 11 (Wed) 21:39 108 02:52 71S 09:02 253
