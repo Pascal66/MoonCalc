@@ -541,42 +541,7 @@ class moon implements Moonphases {
 
 // I would like to hear from you if you find a mistake, or find a
 // nice new application for bits of the code.
-    /*
-     * // nclude <stdio.h> // nclude <stdlib.h> // nclude <math.h> // efine RADS 0.0174532925199433 // efine DEGS
-     * 57.2957795130823 // efine TPI 6.28318530717959 /* ratio of earth radius to astronomical unit
-     */
-    // efine ER_OVER_AU 0.0000426352325194252
-    
-    /* all prototypes here */
-    
-    // double getcoord(int coord);
-    // void getargs(int argc, char *argv[], int *y, int *m, double *tz, double *glong, double *glat);
-    // double range(double y);
-    // double rangerad(double y);
-    // double days(int y, int m, int dn, double hour);
-    // void moonpos(double, double *, double *, double *);
-    // void sunpos(double , double *, double *, double *);
-    // double moontransit(int y, int m, int d, double timezone, double glat, double glong, int *nt);
-    // double atan22(double y, double x);
-    // double epsilon(double d);
-    // void equatorial(double d, double *lon, double *lat, double *r);
-    // void ecliptic(double d, double *lon, double *lat, double *r);
-    // double gst(double d);
-    // void topo(double lst, double glat, double *alp, double *dec, double *r);
-    // double alt(double glat, double ha, double dec);
-    // void libration(double day, double lambda, double beta, double alpha, double *l, double *b, double *p);
-    // void illumination(double day, double lra, double ldec, double dr, double sra, double sdec, double *pabl, double
-    // *ill);
-    // int daysinmonth(int y, int m);
-    // int isleap(int y);
-    
-    // static const char
-    // *usage = " Usage: tmoon date[yyyymm] timz[+/-h.hh] long[+/-dddmm] lat[+/-ddmm]\n"
-    // "example: tmoon 200009 0 -00155 5230\n";
-    
-    // static const char
-    // *keytext = "\n\nKey to column headings\n"
-    // "----------------------\n\n"
+
     // " DY: Date in the month\n"
     // "TRAN: Zone time of Moon transit, followed by a letter indicating\n"
     // " the sun state, * means the Sun is up, blank is full night\n"
@@ -712,83 +677,7 @@ class moon implements Moonphases {
     // exit(EXIT_SUCCESS);
     // }
     // /* end of main() */
-    
-    // /*
-    // getargs() gets the arguments from the command line, does some basic error
-    // checking, and converts arguments into numerical form. Arguments are passed
-    // back in pointers. Error messages print to stderr so re-direction of output
-    // to file won't leave users blind. Error checking prints list of all errors
-    // in a command line before quitting.
-    // */
-    // void
-    // getargs(int argc, char *argv[], int *y, int *m, double *tz, double *glong, double *glat) {
-    
-    // int date, latitude, longitude;
-    // int mflag = 0, yflag = 0, longflag = 0, latflag = 0, tzflag = 0;
-    // int longminflag = 0, latminflag = 0, dflag = 0;
-    
-    // /* if not right number of arguments, then print example command line */
-    
-    // if (argc !=5) {
-    // fprintf(stderr, usage);
-    // exit(EXIT_FAILURE);
-    // }
-    
-    // date = atoi(argv[1]);
-    // *y = date / 100;
-    // *m = date - *y * 100;
-    // *tz = (double) atof(argv[2]);
-    // longitude = atoi(argv[3]);
-    // latitude = atoi(argv[4]);
-    // *glong = RADS * getcoord(longitude);
-    // *glat = RADS * getcoord(latitude);
-    
-    // /* set a flag for each error found */
-    
-    // if (*m > 12 || *m < 1) mflag = 1;
-    // if (*y > 2500) yflag = 1;
-    // if (date < 150001) dflag = 1;
-    // if (fabs((float) *glong) > 180 * RADS) longflag = 1;
-    // if (abs(longitude) % 100 > 59) longminflag = 1;
-    // if (fabs((float) *glat) > 90 * RADS) latflag = 1;
-    // if (abs(latitude) % 100 > 59) latminflag = 1;
-    // if (fabs((float) *tz) > 12) tzflag = 1;
-    
-    // /* print all the errors found */
-    
-    // if (dflag == 1) {
-    // fprintf(stderr, "date: dates must be in form yyyymm, gregorian, and later than 1500 AD\n");
-    // }
-    // if (yflag == 1) {
-    // fprintf(stderr, "date: too far in future - accurate from 1500 to 2500\n");
-    // }
-    // if (mflag == 1) {
-    // fprintf(stderr, "date: month must be in range 0 to 12, eg - August 2000 is entered as 200008\n");
-    // }
-    // if (tzflag == 1) {
-    // fprintf(stderr, "timz: must be in range +/- 12 hours, eg -6 for Chicago\n");
-    // }
-    // if (longflag == 1) {
-    // fprintf(stderr, "long: must be in range +/- 180 degrees\n");
-    // }
-    // if (longminflag == 1) {
-    // fprintf(stderr, "long: last two digits are arcmin - max 59\n");
-    // }
-    // if (latflag == 1) {
-    // fprintf(stderr, " lat: must be in range +/- 90 degrees\n");
-    // }
-    // if (latminflag == 1) {
-    // fprintf(stderr, " lat: last two digits are arcmin - max 59\n");
-    // }
-    
-    // /* quits if one or more flags set */
-    
-    // if (dflag + mflag + yflag + longflag + latflag + tzflag + longminflag + latminflag > 0) {
-    // exit(EXIT_FAILURE);
-    // }
-    
-    // }
-    
+        
     /**
      * coordinates in decimal degrees
      * coord as a ddmm value stored in an integer.
@@ -801,7 +690,7 @@ class moon implements Moonphases {
         $west = 1;
         // double glg, deg;
         if ($coord < 0) $west = -1;
-        $glg = abs(( double ) $coord / 100);
+        $glg = abs( $coord / 100 );
         $deg = floor($glg);
         $glg = $west * ($deg + ($glg - $deg) * 100 / 60);
         return ($glg);
@@ -809,7 +698,7 @@ class moon implements Moonphases {
     
     /**
      * *Assumes Gregorian calendar.
-     * TODO: PP $step is decimal hours....
+    
      *
      * @param $date
      * @return the number of days since J2000.0.
@@ -817,13 +706,10 @@ class moon implements Moonphases {
     // double
     function days($date) {
         // http://www.giss.nasa.gov/tools/mars24/help/algorithm.html
-<<<<<<< HEAD
-        // J2000.0 (ou J2000), désigne le jour julien 2 451 545.0 TT, soit le 1er janvier 2000 dans le calendrier
-        // grégorien, à 11 h 58 min 55,816 s UTC (11 h 59 min 27,816 s TAI)
-=======
+
         // J2000.0 (ou J2000), dÃ©signe le jour julien 2 451 545.0 TT, soit le 1er janvier 2000 dans le calendrier
         // grÃ©gorien, Ã  11 h 58 min 55,816 s UTC (11 h 59 min 27,816 s TAI)
->>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
+
         
         /**
          * A-2.
@@ -862,12 +748,9 @@ class moon implements Moonphases {
          * C 33 from the IERS Earth Orientation Centre indicates this will not occur any earlier than Jan. 1, 2009.)
          * A-5. Determine Julian Date (TT).
          */
-<<<<<<< HEAD
+
         $JDTT = $JDUT + ($TT_UTC) / 86400; // s·day-1]
-=======
-        $JDTT = $JDUT + ($TT_UTC) / 86400; // sÂ·day-1]
->>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
-        
+
         /**
          * A-6.
          * Determine time offset from J2000 epoch (TT). (AM2000, eq. 15)
@@ -877,11 +760,9 @@ class moon implements Moonphases {
         // Eq. Parameter Value
         // A-1 millis 1073137591000 ms
         // A-2 JDUT 2453008.07397
-<<<<<<< HEAD
+
         // A-3 T —
-=======
-        // A-3 T â€”
->>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
+
         // A-4 TT - UTC 64.184 s
         // A-5 JDTT 2453008.07471
         // A-6 DtJ2000 1463.07471
@@ -975,7 +856,7 @@ class moon implements Moonphases {
         $moonpos['lambda'] = $lm;
         $moonpos['beta'] = $bm;
         // /* distance to Moon must be in Earth radii */
-        $moonpos['rvec'] = $rm / 6378.14;
+        $moonpos['rvec'] = $rm / earthRadius /* 6378.137 */;
         return $moonpos;
     }
     
@@ -994,29 +875,25 @@ class moon implements Moonphases {
         // double x, y, z, r1;
         $x = $rvec * cos($dec) * cos($alp) - cos(self::GetLatitude()) * cos($lst);
         $y = $rvec * cos($dec) * sin($alp) - cos(self::GetLatitude()) * sin($lst);
-        $z = $rvec * sin($dec) - sin($glat);
+        $z = $rvec * sin($dec) - sin(self::GetLatitude());
         $r1 = sqrt($x * $x + $y * $y + $z * $z);
         $topo['alpha'] = self::atan22($y, $x);
         $topo['delta'] = asin($z / $r1);
         $topo['rvec'] = $r1;
         return $topo;
     }
-<<<<<<< HEAD
+
 // Location: W 42°42'40.0", N 2°51'30.0", 54m
-=======
-// Location: W 42Â°42'40.0", N 2Â°51'30.0", 54m
->>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
+
 // (Longitude referred to Greenwich meridian)
 
 // Time Zone: 2h 00m east of Greenwich
 
 // Date Rise Az. Transit Alt. Set Az.
 // (Zone)
-<<<<<<< HEAD
+
 // h m ° h m ° h m °
-=======
-// h m Â° h m Â° h m Â°
->>>>>>> 57074e153a6a2ccc046e78d143e7cd8ee1bff56f
+
 // 2014 Jun 09 (Mon) 19:50 102 01:09 77S 07:19 260
 // 2014 Jun 10 (Tue) 20:43 105 01:59 74S 08:09 256
 // 2014 Jun 11 (Wed) 21:39 108 02:52 71S 09:02 253
@@ -1148,8 +1025,8 @@ class moon implements Moonphases {
         $libration['l'] = $a - $f;
         
         // /* kludge to catch cases of 'round the back' angles */
-        if ($libration['l'] < deg2rad(-90)) $libration['l'] += 2 * pi();
-        if ($libration['l'] > deg2rad(90)) $libration['l'] -= 2 * pi();
+        if ($libration['l'] < deg2rad(-90)) $libration['l'] += 2 * M_PI;
+        if ($libration['l'] > deg2rad(90)) $libration['l'] -= 2 * M_PI;
         $libration['b'] = asin(-sin($w) * cos($beta) * sin($i) - sin($beta) * cos($i));
         
         // /* pa pole axis - not used for Sun stuff */
@@ -1302,10 +1179,10 @@ interface Moonphases {
     const firstquarter = 1;
     const fullmoon = 2;
     const lastquarter = 3;
-    const TPI = 6.28318530717959;
     
     /* ratio of earth radius to astronomical unit */
     const ER_OVER_AU = 0.0000426352325194252;
+    const earthRadius = 6367.516477 ;     ## radius of the earth average WG84
 }
 
 ?>
