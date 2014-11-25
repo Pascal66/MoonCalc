@@ -14,7 +14,7 @@ $sol = $mooncalc::equinox_solstice(2014, 1);
 $ete = $mooncalc::julian_to_date($sol);
 $pl  = $mooncalc::julian_to_date($mooncalc::moon_phase(2014 + (date("n")-1)/12, 2));
 $pq  = $mooncalc::julian_to_date($mooncalc::aeaster(2014));
-"Eté " . date("d M Y", mktime(0, 0, 0, $ete["month"], $ete["day"], $ete["year"]));
+echo "EtÃ© " . date("d M Y", mktime(0, 0, 0, $ete["month"], $ete["day"], $ete["year"]));
 echo "Pleine lune " . date("d M Y", mktime(0, 0, 0, $pl["month"], $pl["day"], $pl["year"]));
-echo "Pâques " . date("d M Y", mktime(0, 0, 0, $pq["month"], $pq["day"], $pq["year"]));
+echo "PÃ¢ques " . date("d M Y", mktime(0, 0, 0, $pq["month"], $pq["day"], $pq["year"]));
 ```				
