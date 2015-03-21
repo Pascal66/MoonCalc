@@ -18,3 +18,4 @@ echo "Eté " . date("d M Y", mktime(0, 0, 0, $ete["month"], $ete["day"], $ete["y
 echo "Pleine lune " . date("d M Y", mktime(0, 0, 0, $pl["month"], $pl["day"], $pl["year"]));
 echo "Pâques " . date("d M Y", mktime(0, 0, 0, $pq["month"], $pq["day"], $pq["year"]));
 ```				
+Donations welcome (BTC): 181zufMFpQdd74XGz32cKUnE2BWk2GzYs6
